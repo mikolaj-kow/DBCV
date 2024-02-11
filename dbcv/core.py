@@ -1,4 +1,5 @@
-import multiprocessing
+#import multiprocessing
+from ray.util.multiprocessing import Pool
 import typing as t
 import itertools
 import functools
@@ -248,7 +249,8 @@ def dbcv(
     if n_processes == "auto":
         n_processes = 4 if y.size > 200 else 1
 
-    with _MP.workprec(bits_of_precision), multiprocessing.Pool(processes=min(n_processes, cluster_ids.size)) as ppool:
+    #with _MP.workprec(bits_of_precision), multiprocessing.Pool(processes=min(n_processes, cluster_ids.size)) as ppool:
+    with _MP.workprec(bits_of_precision), Pool(ray_address="auto") as ppool:
         fn_density_sparseness_ = functools.partial(
             fn_density_sparseness,
             d=d,
@@ -264,7 +266,7 @@ def dbcv(
     n_cls_pairs = (cluster_ids.size * (cluster_ids.size - 1)) // 2
 
     if n_cls_pairs > 0:
-        with _MP.workprec(bits_of_precision), multiprocessing.Pool(processes=min(n_processes, n_cls_pairs)) as ppool:
+        with _MP.workprec(bits_of_precision), Pool(ray_address="auto") as ppool:
             fn_density_separation_ = functools.partial(
                 fn_density_separation,
                 d=d,
