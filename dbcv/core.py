@@ -249,7 +249,7 @@ def dbcv(
     if n_processes == "auto":
         n_processes = 4 if y.size > 200 else 1
     print(cluster_ids.size)
-    #with _MP.workprec(bits_of_precision), multiprocessing.Pool(processes=min(n_processes, cluster_ids.size)) as ppool:
+    
     with _MP.workprec(bits_of_precision), Pool(processes=min(n_processes, cluster_ids.size), ray_address="auto", ray_remote_args={'num_cpus':1}) as ppool:
         fn_density_sparseness_ = functools.partial(
             fn_density_sparseness,
