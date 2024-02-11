@@ -1,4 +1,4 @@
 from .core import dbcv
 
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
