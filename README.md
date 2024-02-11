@@ -20,7 +20,7 @@ Fast Density-Based Clustering Validation (DBCV) implementation for Python, with 
 
 ## Install
 ```bash
-python -m pip install "git+https://github.com/FelSiq/DBCV"
+python -m pip install "git+https://github.com/mikolaj-kow/DBCV"
 ```
 
 ---
