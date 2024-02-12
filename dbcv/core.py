@@ -21,16 +21,21 @@ def compute_pair_to_pair_dists(X: npt.NDArray[np.float64], metric: str) -> npt.N
     
     dists_skl = next(sklearn.metrics.pairwise_distances_chunked(X, metric=metric))
     print(dists_skl)
+    np.maximum(dists_skl, 1e-12, out=dists_skl)
+    print(dists_skl)
+    np.fill_diagonal(dists_skl, val=np.inf)
+    print(dists_skl)
+    
+    
     dists_scipy = scipy.spatial.distance.cdist(X, X, metric=metric)
     print(dists_scipy)
-    np.maximum(dists_skl, 1e-12, out=dists_skl)
     np.maximum(dists_scipy, 1e-12, out=dists_scipy)
     print(dists_scipy)
-    print(dists_scipy)
-    np.fill_diagonal(dists_skl, val=np.inf)
     np.fill_diagonal(dists_scipy, val=np.inf)
     print(dists_scipy)
-    print(dists_scipy)
+    
+    
+    
     dists = dists_scipy
     return dists
 
