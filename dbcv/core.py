@@ -52,6 +52,9 @@ def get_subarray(
     if inds_b is None:
         inds_b = inds_a
     inds_a_mesh, inds_b_mesh = np.meshgrid(inds_a, inds_b)
+    print('mesh')
+    print(inds_a_mesh, inds_b_mesh)
+    
     return arr[inds_a_mesh, inds_b_mesh]
 
 
@@ -274,7 +277,8 @@ def dbcv(
             d=d,
             enable_dynamic_precision=enable_dynamic_precision,
         )
-
+        # crash
+        print(cls_inds)
         args = [(cls_ind, get_subarray(dists, inds_a=cls_ind)) for cls_ind in cls_inds]
 
         for cls_id, (dsc, internal_node_inds) in enumerate(ppool.starmap(fn_density_sparseness_, args)):
