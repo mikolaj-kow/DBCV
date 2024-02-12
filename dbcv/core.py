@@ -7,6 +7,7 @@ import functools
 import numpy as np
 import numpy.typing as npt
 import sklearn.neighbors
+import sklearn.metrics
 import scipy.spatial.distance
 import scipy.sparse.csgraph
 import scipy.stats
@@ -17,7 +18,8 @@ _MP = mpmath.mp.clone()
 
 
 def compute_pair_to_pair_dists(X: npt.NDArray[np.float64], metric: str) -> npt.NDArray[np.float64]:
-    dists = scipy.spatial.distance.cdist(X, X, metric=metric)
+    # dists = scipy.spatial.distance.cdist(X, X, metric=metric)
+    dists = next(sklearn.metrics.pairwise_distances_chunked(X, metric=metric))
     np.maximum(dists, 1e-12, out=dists)
     np.fill_diagonal(dists, val=np.inf)
     return dists
