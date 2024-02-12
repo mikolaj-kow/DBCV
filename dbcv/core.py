@@ -36,7 +36,7 @@ def compute_pair_to_pair_dists(X: npt.NDArray[np.float64], metric: str) -> npt.N
     # except MemoryError as error:
     #     print(error)
     #     dists_scipy = dists_skl
-    # print(numpy.array_equal(dists_scipy, dists_skl))
+    # print(np.array_equal(dists_scipy, dists_skl))
     dists = dists_skl
     return dists
 
