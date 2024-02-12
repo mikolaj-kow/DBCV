@@ -26,16 +26,20 @@ def compute_pair_to_pair_dists(X: npt.NDArray[np.float64], metric: str) -> npt.N
     np.fill_diagonal(dists_skl, val=np.inf)
     print(dists_skl)
     
+    try:
+        dists_scipy = scipy.spatial.distance.cdist(X, X, metric=metric)
+        print(dists_scipy)
+        np.maximum(dists_scipy, 1e-12, out=dists_scipy)
+        print(dists_scipy)
+        np.fill_diagonal(dists_scipy, val=np.inf)
+        print(dists_scipy)
+    except MemoryError as error:
+        print(error)
+        dists_scipy = dists_skl
     
-    dists_scipy = scipy.spatial.distance.cdist(X, X, metric=metric)
-    print(dists_scipy)
-    np.maximum(dists_scipy, 1e-12, out=dists_scipy)
-    print(dists_scipy)
-    np.fill_diagonal(dists_scipy, val=np.inf)
-    print(dists_scipy)
     
     
-    
+    numpy.array_equal(dists_scipy, dists_skl)
     dists = dists_scipy
     return dists
 
